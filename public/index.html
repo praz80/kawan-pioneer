@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Kawan Pioneer — Panduan Pi &amp; Perisai Penipuan</title>
+  <meta name="description" content="Panduan Pi Network berbahasa Indonesia: belajar Pi, amankan dompet, dan kenali penipuan sebelum terjadi.">
+  <script src="https://sdk.minepi.com/pi-sdk.js"></script>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">π</div>
+      <div>
+        <div class="brand-name">Kawan Pioneer</div>
+        <div class="brand-sub">Panduan Pi &amp; Perisai Penipuan</div>
+      </div>
+    </div>
+    <button id="authBtn" class="btn btn-small">Masuk dengan Pi</button>
+  </header>
+
+  <main id="app">
+    <!-- BERANDA -->
+    <section class="view" id="view-home">
+      <div class="card hero">
+        <h1 id="greeting">Halo, Pioneer!</h1>
+        <p class="muted" id="heroText">Belajar Pi sedikit demi sedikit, amankan dompetmu, dan jangan sampai jadi korban penipuan.</p>
+        <div class="stats">
+          <div class="stat"><span class="stat-num" id="statXp">0</span><span class="stat-label">XP</span></div>
+          <div class="stat"><span class="stat-num" id="statLevel">Pioneer</span><span class="stat-label">Level</span></div>
+          <div class="stat"><span class="stat-num" id="statStreak">0</span><span class="stat-label">Hari beruntun</span></div>
+        </div>
+        <div class="progress-wrap" aria-label="Kemajuan belajar">
+          <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+          <div class="muted small" id="progressText">0 dari 6 modul selesai</div>
+        </div>
+      </div>
+
+      <div class="card tip">
+        <div class="card-title">🛡️ Tips Keamanan Hari Ini</div>
+        <p id="dailyTip"></p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Lanjutkan Belajarmu</div>
+        <div id="nextLesson"></div>
+      </div>
+
+      <div class="card premium" id="premiumCard">
+        <div class="card-title">⭐ Paket Penjaga</div>
+        <p>Buka semua modul lanjutan, katalog penipuan lengkap, dan lencana Penjaga. Sekali bayar <strong>1 Pi</strong>.</p>
+        <button id="payBtn" class="btn btn-block">Buka dengan 1 Pi</button>
+        <p class="muted small" id="payNote">Pembayaran memakai Pi Wallet di dalam Pi Browser.</p>
+      </div>
+    </section>
+
+    <!-- BELAJAR -->
+    <section class="view hidden" id="view-learn">
+      <h2 class="view-title">Belajar Pi</h2>
+      <p class="muted">Enam modul singkat berbahasa Indonesia. Selesaikan kuis di akhir modul untuk mendapat XP.</p>
+      <div id="lessonList"></div>
+      <div id="lessonReader" class="hidden"></div>
+    </section>
+
+    <!-- PERISAI -->
+    <section class="view hidden" id="view-shield">
+      <h2 class="view-title">Perisai Penipuan</h2>
+      <p class="muted">Dapat pesan atau tautan yang mencurigakan? Tempel di sini — kami periksa tanda bahayanya. Pemeriksaan berjalan di perangkatmu; teks tidak dikirim ke mana pun.</p>
+      <div class="card">
+        <label class="label" for="shieldInput">Pesan / tautan mencurigakan</label>
+        <textarea id="shieldInput" rows="6" placeholder="Tempel pesan, chat, atau tautan di sini…"></textarea>
+        <button id="shieldBtn" class="btn btn-block">Periksa Sekarang</button>
+        <div id="shieldResult" class="hidden"></div>
+      </div>
+      <h3 class="section-title">Katalog Modus Penipuan</h3>
+      <div id="scamCatalog"></div>
+    </section>
+
+    <!-- KUIS -->
+    <section class="view hidden" id="view-quiz">
+      <h2 class="view-title">Kuis Harian</h2>
+      <p class="muted">Lima soal acak setiap hari. Selesaikan untuk menjaga streak dan menambah XP.</p>
+      <div class="card" id="quizCard">
+        <div id="quizStart">
+          <p id="quizStatus">Kuis hari ini menunggumu.</p>
+          <button id="quizStartBtn" class="btn btn-block">Mulai Kuis Harian</button>
+        </div>
+        <div id="quizPlay" class="hidden"></div>
+        <div id="quizDone" class="hidden"></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Level Pioneer</div>
+        <ul class="levels">
+          <li><strong>Pioneer</strong> — 0 XP</li>
+          <li><strong>Penjaga</strong> — 100 XP</li>
+          <li><strong>Ahli</strong> — 300 XP</li>
+          <li><strong>Legenda</strong> — 600 XP</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- PROFIL -->
+    <section class="view hidden" id="view-profile">
+      <h2 class="view-title">Profil</h2>
+      <div class="card">
+        <p><strong>Pengguna:</strong> <span id="profileName">Tamu (mode demo)</span></p>
+        <p><strong>Status akun:</strong> <span id="profileStatus">Belum masuk dengan Pi</span></p>
+        <p><strong>Paket Penjaga:</strong> <span id="profilePremium">Belum aktif</span></p>
+      </div>
+      <div class="card">
+        <div class="card-title">Tentang</div>
+        <p>Kawan Pioneer (Pioneer Buddy) adalah aplikasi pendamping berbahasa Indonesia untuk Pioneer: panduan belajar Pi, keamanan dompet, dan perlindungan dari penipuan. Dibangun untuk Pi Next Hackathon.</p>
+        <p><a href="/privacy.html">Kebijakan Privasi</a></p>
+      </div>
+      <div class="card danger-zone">
+        <div class="card-title">Atur Ulang Progres</div>
+        <p class="muted small">Menghapus XP, modul selesai, dan streak di perangkat ini.</p>
+        <button id="resetBtn" class="btn btn-ghost">Atur Ulang</button>
+      </div>
+    </section>
+  </main>
+
+  <nav class="tabbar" aria-label="Navigasi utama">
+    <button class="tab active" data-view="home"><span class="tab-icon">🏠</span>Beranda</button>
+    <button class="tab" data-view="learn"><span class="tab-icon">📚</span>Belajar</button>
+    <button class="tab" data-view="shield"><span class="tab-icon">🛡️</span>Perisai</button>
+    <button class="tab" data-view="quiz"><span class="tab-icon">🎯</span>Kuis</button>
+    <button class="tab" data-view="profile"><span class="tab-icon">👤</span>Profil</button>
+  </nav>
+
+  <script src="/data.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>
