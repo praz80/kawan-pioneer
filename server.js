@@ -31,6 +31,16 @@ app.use((req, res, next) => {
   next();
 });
 
+// Pi domain-ownership proof. The Developer Portal shows a validation key when
+// the app URL is registered; the app owner stores it as the PI_VALIDATION_KEY
+// environment variable (never in code or in the repo), and this route serves it
+// back as plain text so the Portal can confirm the domain is really ours.
+app.get('/validation-key.txt', (req, res) => {
+  const key = process.env.PI_VALIDATION_KEY || '';
+  if (!key) return res.status(404).type('text/plain').send('not configured');
+  res.type('text/plain').send(key);
+});
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 const PI_API_BASE = 'https://api.minepi.com/v2';
