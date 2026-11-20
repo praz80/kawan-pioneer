@@ -30,12 +30,21 @@ The frontend initializes the Pi SDK with `sandbox: true` (see `SANDBOX` in
 mode: sign-in and payments are simulated so the content can be previewed
 anywhere, while all learning features work normally.
 
+## Deployment status (20 Nov 2026)
+
+- Live on Vercel (Hobby): https://kawan-pioneer.vercel.app
+- Registered as the app URL of "Pioneer Buddy" (Testnet) in the Pi Developer
+  Portal; **domain ownership verified** on 20 Nov 2026 (validation key served
+  from a Vercel environment variable, never committed).
+- Server API Key stored as the `PI_API_KEY` Vercel environment variable
+  (Secret, Production + Preview) — set by the app owner, never committed.
+
 ## Production checklist
 
 1. Register the app in the Pi Developer Portal and copy the Server API Key
-   into `.env` (server-side only — never commit it).
+   into `.env` (server-side only — never commit it). **Done — via Vercel env.**
 2. Deploy behind HTTPS, register the production URL in the Developer Portal,
-   and complete domain ownership validation.
+   and complete domain ownership validation. **Done for the Testnet app.**
 3. Set `SANDBOX = false` in `public/app.js`.
 4. Complete one real User-to-App payment to confirm the setup.
 5. Listing assets: English name ("Pioneer Buddy"), English description,
