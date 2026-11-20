@@ -1,1 +1,1 @@
-{"dependencies":{"express":"^4.19.2"},"description":"Kawan Pioneer (Pioneer Buddy) — Indonesian Pi guide & scam-shield app for the Pi Next Hackathon","main":"server.js","name":"kawan-pioneer","private":true,"scripts":{"start":"node --env-file=.env server.js"},"version":"0.1.0"}
+{"dependencies":{"express":"^4.19.2"},"description":"Kawan Pioneer (Pioneer Buddy) — Indonesian Pi guide & scam-shield app for the Pi Next Hackathon","main":"server.js","name":"kawan-pioneer","private":true,"scripts":{"start":"node server.js"},"version":"0.1.0"}
