@@ -6,6 +6,7 @@
 // Pattern follows the official guide at developers.minepi.com ("Build an App").
 // The Server API Key stays on the server (see .env.example); it is never sent to clients.
 
+const path = require('path');
 const express = require('express');
 
 const app = express();
@@ -30,7 +31,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 const PI_API_BASE = 'https://api.minepi.com/v2';
 const PI_API_KEY = process.env.PI_API_KEY || '';
@@ -110,4 +111,10 @@ app.post('/api/payments/complete', async (req, res) => {
   }
 });
 
-app.listen(PORT, () => console.log(`Kawan Pioneer listening on http://localhost:${PORT}`));
+// Local / traditional hosts: run directly (`node server.js`) and listen.
+// Serverless hosts (Vercel): api/index.js imports the app as a handler instead.
+if (require.main === module) {
+  app.listen(PORT, () => console.log(`Kawan Pioneer listening on http://localhost:${PORT}`));
+}
+
+module.exports = app;
