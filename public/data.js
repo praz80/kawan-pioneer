@@ -205,3 +205,75 @@ const DAILY_TIPS = [
   'Penawaran yang mendesakmu "sekarang juga" hampir selalu penipuan. Yang sah tidak takut diperiksa.',
   'Periksa alamat dompet tujuan karakter demi karakter sebelum mengirim. Alamat asli: 56 karakter, diawali huruf G.',
 ];
+
+// Lapak Pionir — etalase barang & jasa digital dari Pioneer Indonesia.
+// Harga dalam Pi. Etalase perdana: penjual di bawah ini adalah contoh
+// tampilan; pendaftaran penjual asli dibuka setelah listing Mainnet aktif.
+const PRODUCT_CATEGORIES = ['Semua', 'Desain', 'Tulis & Terjemah', 'Digital', 'Belajar'];
+
+const PRODUCTS = [
+  {
+    id: 'logo-kilat', icon: '🎨', cat: 'Desain',
+    name: 'Logo Usaha Kilat',
+    seller: 'Studio Kreatif Blitar',
+    price: 3,
+    desc: 'Logo sederhana dan bersih untuk usaha kecil: 2 pilihan konsep, 1 kali revisi, file PNG + SVG siap pakai untuk kemasan dan media sosial.',
+    delivery: 'File dikirim lewat chat Pi maks. 1×24 jam setelah pembayaran.',
+  },
+  {
+    id: 'terjemah-jawa', icon: '🌾', cat: 'Tulis & Terjemah',
+    name: 'Terjemahan Jawa ↔ Indonesia (1 Halaman)',
+    seller: 'Lingua Jawa Timur',
+    price: 1,
+    desc: 'Terjemahan satu halaman dokumen, surat, atau teks dari Bahasa Jawa ke Indonesia atau sebaliknya, termasuk pilihan ngoko/krama yang tepat.',
+    delivery: 'Hasil terjemahan dikirim sebagai dokumen maks. 1×24 jam.',
+  },
+  {
+    id: 'foto-produk', icon: '📸', cat: 'Desain',
+    name: 'Foto Produk Dipercantik (5 Foto)',
+    seller: 'Klinik Foto UMKM',
+    price: 2,
+    desc: 'Lima foto produkmu dirapikan: lebih cerah, latar bersih, dan siap upload ke marketplace. Cukup kirim foto asli dari HP.',
+    delivery: 'Foto hasil edit dikirim maks. 2×24 jam setelah foto asli diterima.',
+  },
+  {
+    id: 'cv-inggris', icon: '📄', cat: 'Tulis & Terjemah',
+    name: 'CV Bahasa Inggris Siap Lamar',
+    seller: 'KarierKita',
+    price: 2,
+    desc: 'CV berbahasa Inggris yang rapi dari data mentahmu: susunan profesional, kata kerja aktif, dan format PDF yang ramah ATS.',
+    delivery: 'Draf CV dikirim maks. 2×24 jam; 1 kali revisi kecil termasuk.',
+  },
+  {
+    id: 'feed-ig', icon: '📱', cat: 'Desain',
+    name: '5 Template Feed Instagram Usaha',
+    seller: 'Studio Kreatif Blitar',
+    price: 3,
+    desc: 'Lima template feed siap edit (Canva) dengan warna dan gaya usahamu: promo, testimoni, katalog, quote, dan pengumuman.',
+    delivery: 'Tautan template Canva dikirim maks. 1×24 jam.',
+  },
+  {
+    id: 'les-inggris', icon: '🗣️', cat: 'Belajar',
+    name: 'Les Bahasa Inggris Online 30 Menit',
+    seller: 'English Bareng Rara',
+    price: 2,
+    desc: 'Satu sesi percakapan Bahasa Inggris 30 menit lewat panggilan video, untuk pemula yang ingin berani bicara. Jadwal disepakati bersama.',
+    delivery: 'Penjadwalan sesi maks. 1×24 jam setelah pembayaran.',
+  },
+  {
+    id: 'ebook-resep', icon: '🍰', cat: 'Digital',
+    name: 'E-book 20 Resep Jajanan Laris',
+    seller: 'Dapur Nusantara',
+    price: 1,
+    desc: 'Kumpulan 20 resep jajanan pasar yang terbukti laris untuk jualan, lengkap dengan hitungan modal dan saran harga jual per resep.',
+    delivery: 'E-book PDF dikirim segera setelah pembayaran terkonfirmasi.',
+  },
+  {
+    id: 'ketik-dokumen', icon: '⌨️', cat: 'Digital',
+    name: 'Ketik & Rapikan Dokumen (10 Halaman)',
+    seller: 'RapiKetik',
+    price: 2,
+    desc: 'Dokumen tulisan tangan atau foto ketikan dirapikan menjadi file Word yang bersih: judul, penomoran, dan ejaan diseragamkan.',
+    delivery: 'File Word dikirim maks. 2×24 jam setelah bahan diterima.',
+  },
+];

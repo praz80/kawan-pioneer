@@ -5,7 +5,9 @@
 //    payments are simulated so the learning content can be tried anywhere;
 //    a banner in the Profile explains the difference.
 
-const SANDBOX = true; // Pi Sandbox while developing; set false for production.
+// Pi Sandbox everywhere except the Mainnet deployment, whose domain
+// contains "mainnet": Testnet app -> sandbox, Mainnet app -> production.
+const SANDBOX = !window.location.hostname.includes('mainnet');
 const STORE_KEY = 'kp-progress-v1';
 
 let piUser = null;
@@ -24,7 +26,7 @@ function loadProgress() {
 }
 function saveProgress(p) { localStorage.setItem(STORE_KEY, JSON.stringify(p)); }
 const progress = Object.assign(
-  { xp: 0, modules: {}, streak: 0, lastDailyQuiz: null, premium: false },
+  { xp: 0, modules: {}, streak: 0, lastDailyQuiz: null, premium: false, purchases: [] },
   loadProgress()
 );
 function persist() { saveProgress(progress); }
@@ -81,16 +83,18 @@ async function signIn() {
   }
 }
 
-// ---------- premium payment ----------
-function buyPremium() {
-  if (progress.premium) return;
+// ---------- payments (shared) ----------
+// One payment pipeline for the premium package and every Lapak product:
+// the Pi SDK collects the payment in Pi Wallet; our server approves and
+// completes it with the Server API Key.
+function payWithPi({ amount, memo, metadata, onPaid }) {
   if (!inPiBrowser) {
-    alert('Mode demo: pembayaran Pi hanya berjalan di dalam Pi Browser. Di sana, tombol ini membuka Pi Wallet untuk membayar 1 Pi (testnet/sandbox) dan Paket Penjaga langsung aktif.');
+    alert('Mode demo: pembayaran Pi hanya berjalan di dalam Pi Browser. Di sana, tombol ini membuka Pi Wallet untuk menyelesaikan pembayaran.');
     return;
   }
   if (!piUser) { alert('Masuk dengan Pi dulu, ya.'); return; }
   window.Pi.createPayment(
-    { amount: 1, memo: 'Paket Penjaga — Kawan Pioneer', metadata: { feature: 'paket-penjaga' } },
+    { amount, memo, metadata },
     {
       onReadyForServerApproval: async (paymentId) => {
         await fetch('/api/payments/approve', {
@@ -105,17 +109,81 @@ function buyPremium() {
           headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${accessToken}` },
           body: JSON.stringify({ paymentId, txid }),
         });
-        if (res.ok) {
-          progress.premium = true;
-          persist();
-          renderAll();
-          alert('Pembayaran selesai. Paket Penjaga aktif — semua modul terbuka!');
-        }
+        if (res.ok) onPaid();
       },
       onCancel: (paymentId) => console.log('Payment cancelled:', paymentId),
       onError: (error) => { console.error('Payment error', error); alert('Pembayaran gagal. Coba lagi nanti.'); },
     }
   );
+}
+
+// ---------- premium payment ----------
+function buyPremium() {
+  if (progress.premium) return;
+  payWithPi({
+    amount: 1,
+    memo: 'Paket Penjaga — Kawan Pioneer',
+    metadata: { feature: 'paket-penjaga' },
+    onPaid: () => {
+      progress.premium = true;
+      persist();
+      renderAll();
+      alert('Pembayaran selesai. Paket Penjaga aktif — semua modul terbuka!');
+    },
+  });
+}
+
+// ---------- lapak ----------
+let lapakFilter = 'Semua';
+function renderLapak() {
+  const chips = document.getElementById('lapakChips');
+  if (!chips) return;
+  chips.innerHTML = '';
+  for (const cat of PRODUCT_CATEGORIES) {
+    const b = document.createElement('button');
+    b.className = 'chip' + (cat === lapakFilter ? ' active' : '');
+    b.textContent = cat;
+    b.onclick = () => { lapakFilter = cat; renderLapak(); };
+    chips.appendChild(b);
+  }
+  const grid = document.getElementById('lapakGrid');
+  grid.innerHTML = '';
+  const items = PRODUCTS.filter(p => lapakFilter === 'Semua' || p.cat === lapakFilter);
+  for (const p of items) {
+    const owned = progress.purchases.some(x => x.id === p.id);
+    const el = document.createElement('div');
+    el.className = 'card product-card';
+    el.innerHTML = `
+      <div class="product-head">
+        <span class="lesson-badge">${p.icon}</span>
+        <div class="product-title">
+          <h3>${p.name}</h3>
+          <p class="muted small">oleh ${p.seller} · ${p.cat}</p>
+        </div>
+        <span class="price-badge">${p.price} π</span>
+      </div>
+      <p>${p.desc}</p>
+      <p class="muted small">📦 ${p.delivery}</p>
+      <button class="btn btn-block product-buy">${owned ? 'Beli Lagi' : 'Beli dengan Pi'}</button>`;
+    el.querySelector('.product-buy').onclick = () => buyProduct(p.id);
+    grid.appendChild(el);
+  }
+  if (!items.length) grid.innerHTML = '<p class="muted">Belum ada produk di kategori ini.</p>';
+}
+function buyProduct(id) {
+  const p = PRODUCTS.find(x => x.id === id);
+  if (!p) return;
+  payWithPi({
+    amount: p.price,
+    memo: `${p.name} — Lapak Pionir`,
+    metadata: { product: p.id, seller: p.seller },
+    onPaid: () => {
+      progress.purchases.push({ id: p.id, ts: Date.now() });
+      persist();
+      renderAll();
+      alert(`Pembayaran selesai! "${p.name}" tercatat sebagai pembelianmu. ${p.delivery}`);
+    },
+  });
 }
 
 // ---------- navigation ----------
@@ -355,13 +423,18 @@ function renderProfile() {
     ? (inPiBrowser ? 'Masuk dengan Pi (terverifikasi server)' : 'Mode demo di luar Pi Browser')
     : 'Belum masuk dengan Pi';
   document.getElementById('profilePremium').textContent = progress.premium ? 'Aktif ⭐' : 'Belum aktif';
+  const n = (progress.purchases || []).length;
+  document.getElementById('profilePurchases').textContent = n
+    ? `${n} pembelian (${[...new Set(progress.purchases.map(x => PRODUCTS.find(p => p.id === x.id)?.name || x.id))].join(', ')})`
+    : 'Belum ada';
 }
 
 // ---------- wire up ----------
-function renderAll() { renderHome(); renderLessons(); renderScams(); renderProfile(); }
+function renderAll() { renderHome(); renderLessons(); renderScams(); renderLapak(); renderProfile(); }
 document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => switchView(t.dataset.view)));
 document.getElementById('authBtn').addEventListener('click', signIn);
 document.getElementById('payBtn').addEventListener('click', buyPremium);
+document.getElementById('lapakTeaserBtn').addEventListener('click', () => switchView('lapak'));
 document.getElementById('shieldBtn').addEventListener('click', runShield);
 document.getElementById('quizStartBtn').addEventListener('click', startDailyQuiz);
 document.getElementById('resetBtn').addEventListener('click', () => {

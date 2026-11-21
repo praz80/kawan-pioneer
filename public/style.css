@@ -149,3 +149,21 @@ textarea {
 
 .danger-zone { border-color: #f0d5d1; }
 a { color: var(--pi-purple); }
+
+/* Lapak Pionir */
+.lapak-banner { border-color: var(--pi-gold); background: linear-gradient(180deg, #fffaf0, #fff); }
+.chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+.chip {
+  appearance: none; cursor: pointer; font: inherit; font-size: 13px; font-weight: 600;
+  padding: 7px 13px; border-radius: 99px; border: 1px solid var(--line);
+  background: var(--card); color: var(--muted);
+}
+.chip.active { background: var(--pi-purple); border-color: var(--pi-purple); color: #fff; }
+.product-card h3 { margin: 0 0 2px; font-size: 16px; }
+.product-head { display: flex; gap: 12px; align-items: flex-start; }
+.product-title { flex: 1; }
+.product-title p { margin: 0; }
+.price-badge {
+  flex: none; background: var(--pi-gold); color: var(--pi-purple-dark);
+  font-weight: 800; font-size: 15px; padding: 5px 11px; border-radius: 99px;
+}

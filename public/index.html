@@ -53,6 +53,12 @@
         <button id="payBtn" class="btn btn-block">Buka dengan 1 Pi</button>
         <p class="muted small" id="payNote">Pembayaran memakai Pi Wallet di dalam Pi Browser.</p>
       </div>
+
+      <div class="card">
+        <div class="card-title">🛍️ Lapak Pionir — Baru!</div>
+        <p>Barang &amp; jasa digital dari sesama Pioneer Indonesia, mulai <strong>1 Pi</strong>. Dari logo usaha sampai terjemahan Bahasa Jawa.</p>
+        <button id="lapakTeaserBtn" class="btn btn-block btn-gold">Jelajahi Lapak</button>
+      </div>
     </section>
 
     <!-- BELAJAR -->
@@ -100,6 +106,26 @@
       </div>
     </section>
 
+    <!-- LAPAK -->
+    <section class="view hidden" id="view-lapak">
+      <h2 class="view-title">Lapak Pionir</h2>
+      <p class="muted">Etalase barang &amp; jasa digital dari Pioneer Indonesia. Semua harga dalam Pi, pembayaran aman lewat Pi Wallet di dalam aplikasi ini — tidak pernah lewat chat atau tautan luar.</p>
+      <div class="card lapak-banner">
+        <p><strong>🚀 Etalase perdana.</strong> Penjual yang tampil saat ini adalah contoh tampilan Lapak. Pendaftaran penjual asli dibuka setelah Kawan Pioneer tayang di daftar aplikasi Mainnet.</p>
+      </div>
+      <div class="chips" id="lapakChips"></div>
+      <div id="lapakGrid"></div>
+      <div class="card">
+        <div class="card-title">Cara Membeli yang Aman</div>
+        <ul class="levels">
+          <li>Masuk dengan Pi, pilih produk, lalu ketuk <strong>Beli</strong>.</li>
+          <li>Konfirmasi pembayaran hanya di jendela resmi Pi Wallet.</li>
+          <li>Penjual mengirim barang/jasa digital sesuai keterangan produk.</li>
+          <li><strong>Aturan emas:</strong> jangan pernah membayar lewat tautan dari chat — pembayaran resmi hanya terjadi di dalam aplikasi ini.</li>
+        </ul>
+      </div>
+    </section>
+
     <!-- PROFIL -->
     <section class="view hidden" id="view-profile">
       <h2 class="view-title">Profil</h2>
@@ -107,6 +133,7 @@
         <p><strong>Pengguna:</strong> <span id="profileName">Tamu (mode demo)</span></p>
         <p><strong>Status akun:</strong> <span id="profileStatus">Belum masuk dengan Pi</span></p>
         <p><strong>Paket Penjaga:</strong> <span id="profilePremium">Belum aktif</span></p>
+        <p><strong>Pembelian Lapak:</strong> <span id="profilePurchases">Belum ada</span></p>
       </div>
       <div class="card">
         <div class="card-title">Tentang</div>
@@ -125,6 +152,7 @@
     <button class="tab active" data-view="home"><span class="tab-icon">🏠</span>Beranda</button>
     <button class="tab" data-view="learn"><span class="tab-icon">📚</span>Belajar</button>
     <button class="tab" data-view="shield"><span class="tab-icon">🛡️</span>Perisai</button>
+    <button class="tab" data-view="lapak"><span class="tab-icon">🛍️</span>Lapak</button>
     <button class="tab" data-view="quiz"><span class="tab-icon">🎯</span>Kuis</button>
     <button class="tab" data-view="profile"><span class="tab-icon">👤</span>Profil</button>
   </nav>
